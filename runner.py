@@ -24,8 +24,8 @@ print(inputPath)
 def generateBotEn(outputPath, inputPath):
     ####[{'col': 0, 'mapping': [('human', 1), ('bot', 2)]}]####
     pathEn = inputPath+"/en"
-    w2v = "/media/data/crawl-300d-2M-subword.vec"
-    model_bh = '/media/data/03.weights.05-0.11579_0.9733_fasttext_02.hdf5'
+    w2v = r"C:\Users\seang\OneDrive\Desktop\Intern\pan19\polignano19\models\crawl-300d-2M.vec\crawl-300d-2M.vec"
+    model_bh = r'C:\Users\seang\OneDrive\Desktop\Intern\pan19\polignano19\models\ENGLISH_BotHuman.weights.loss-0.08192_accuracy-0.97816_FASTTEXT.hdf5'
     human_dir= outputPath+"/toDoHuman/listHumans.csv"
     results_dir = outputPath+"/en/"
 
@@ -68,6 +68,8 @@ def generateBotEn(outputPath, inputPath):
                 except ValueError as e:
                     print(e)
                     continue
+                except:
+                    print(pathToFile)
 
     end = time.time()
     print("Total running time is", end - start)
@@ -138,7 +140,7 @@ def generateBotEn(outputPath, inputPath):
                 for token in tokList[0:50]:
                     g_vec =[]
                     is_in_model = False
-                    if token in google_300.vocab.keys ( ):
+                    if token in google_300.index_to_key :
                         is_in_model = True
                         g_vec = google_300.word_vec(token)
                     elif token == "<number>":
@@ -166,9 +168,9 @@ def generateBotEn(outputPath, inputPath):
                         is_in_model = True
                         g_vec = google_300.word_vec("url")
                     elif not is_in_model:
-                        max = len ( google_300.vocab.keys ( ) ) - 1
+                        max = len ( google_300.index_to_key ) - 1
                         index = rn.randint ( 0 , max )
-                        word = google_300.index2word[ index ]
+                        word = google_300.index_to_key[ index ]
                         g_vec = google_300.word_vec( word )
 
                     embTweetUser[numTok] = np.array(g_vec)
@@ -862,14 +864,14 @@ botEn = generateBotEn(outputPath,inputPath)
 botEn = None
 gc.collect()
 
-mOrF_EN = generateMFEn(outputPath,inputPath)
-mOrF_EN = None
-gc.collect()
-
-botEs = generateBotEs(outputPath,inputPath)
-botEs = None
-gc.collect()
-
-mOrF_Es = generateMFEs(outputPath,inputPath)
-mOrF_Es = None
-gc.collect()
+#mOrF_EN = generateMFEn(outputPath,inputPath)
+#mOrF_EN = None
+#gc.collect()
+#
+#botEs = generateBotEs(outputPath,inputPath)
+#botEs = None
+#gc.collect()
+#
+#mOrF_Es = generateMFEs(outputPath,inputPath)
+#mOrF_Es = None
+#gc.collect()
